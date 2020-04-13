@@ -19,31 +19,7 @@ class TimeCounterPage extends StatelessWidget {
                 valueListenable: provider.listenable,
                 builder: (BuildContext context, Box<CountItemModel> box, _) {
                   if (box.values.isNotEmpty) {
-                    final items = box.values.toList();
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemCount: box.values.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final data = items[index];
-
-                        return TimeCountItem(
-                          data: data,
-                          onTap: () {
-                            if (data.records != null && data.records.isNotEmpty) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) => TimeRecordPage(data.records.toList()),
-                                ),
-                              );
-                            }
-                          },
-                          addOnTap: () {
-                            provider.addRecord(index, data);
-                          },
-                        );
-                      },
-                    );
+                    return CounterList(list: box.values.toList(), provider: provider);
                   }
 
                   return Container();
@@ -58,5 +34,41 @@ class TimeCounterPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CounterList extends StatelessWidget {
+  CounterList({this.list, this.provider});
+
+  final List<CountItemModel> list;
+  final TimeCounterProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        final data = list[index];
+
+        return TimeCountItem(
+          data: data,
+          onTap: () {
+            if (data.records != null && data.records.isNotEmpty) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => TimeRecordPage(data.records.toList()),
+                ),
+              );
+            }
+          },
+          addOnTap: () {
+            provider.addRecord(index, data);
+          },
+        );
+      },
+    );
+    ;
   }
 }

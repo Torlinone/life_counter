@@ -51,7 +51,7 @@ class TimeCountItem extends StatelessWidget implements CountItemBase {
                   ),
                   decoration: BoxDecoration(
                     color: Color(0x2F4A4ADF),
-                    borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
+                    borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
                   ),
                 ),
                 Expanded(
